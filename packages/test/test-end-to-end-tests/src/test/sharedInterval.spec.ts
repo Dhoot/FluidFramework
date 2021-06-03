@@ -59,6 +59,18 @@ function testIntervalCollection(intervalCollection: IntervalCollection<SequenceI
     }
 
     const intervalArray: SequenceInterval[] = [];
+
+    intervalArray[0] = intervalCollection.add(0, 0, IntervalType.SlideOnRemove);
+    intervalArray[1] = intervalCollection.add(0, 0, IntervalType.SlideOnRemove);
+    assert.notStrictEqual(intervalArray[0], intervalArray[1]);
+    intervalCollection.delete(0, 0);
+    let id: string = intervalArray[0].getIntervalId() || "";
+    let interval = intervalCollection.getIntervalById(id);
+    assert.strictEqual(interval, undefined);
+    id = intervalArray[1].getIntervalId() || "";
+    interval = intervalCollection.getIntervalById(id);
+    assert.strictEqual(interval, undefined);
+
     intervalArray[0] = intervalCollection.add(0, 0, IntervalType.SlideOnRemove);
     intervalArray[1] = intervalCollection.add(0, 1, IntervalType.SlideOnRemove);
     intervalArray[2] = intervalCollection.add(0, 2, IntervalType.SlideOnRemove);

@@ -160,7 +160,15 @@ export class SequenceInterval implements ISerializableInterval {
     public compare(b: SequenceInterval) {
         const startResult = this.compareStart(b);
         if (startResult === 0) {
-            return this.compareEnd(b);
+            const endResult = this.compareEnd(b);
+            if (endResult === 0) {
+                const thisId = this.getIntervalId();
+                const bId = b.getIntervalId();
+                return thisId > bId ? 1 : thisId < bId ? -1 : 0;
+            }
+            else {
+                return endResult;
+            }
         } else {
             return startResult;
         }
